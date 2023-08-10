@@ -3,6 +3,7 @@ pipeline {
     docker {
       image 'node:4-alpine'
     }
+
   }
   stages {
     stage('build') {
@@ -11,31 +12,13 @@ pipeline {
       }
     }
 
-    stage('Run Tests') {
-      parallel {
-        stage('unit test') {
-          steps {
-            sh 'npm test'
-          }
-        }
-
-        stage('load test') {
-          steps {
-            sleep 4
-          }
-        }
-
-      }
-    }
-
-    stage('package') {
+    stage('unit test') {
       steps {
-        sh 'npm package'
+        sh 'npm test'
       }
     }
 
   }
-
   post {
     always {
       echo 'This pipeline is completed..'
